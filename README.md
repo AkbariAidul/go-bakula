@@ -1,66 +1,301 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# GO BAKULA 🌿
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**Gerbang Online Basis Aduan dan Komunikasi Untuk Lingkungan Aman**
 
-## About Laravel
+Smart City Dashboard untuk Kabupaten Barito Kuala - Platform pelaporan terpadu berbasis web untuk warga melaporkan keluhan infrastruktur, lingkungan, dan layanan publik.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+![Laravel](https://img.shields.io/badge/Laravel-11.x-FF2D20?style=flat&logo=laravel)
+![Vue.js](https://img.shields.io/badge/Vue.js-3.x-4FC08D?style=flat&logo=vue.js)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.x-38B2AC?style=flat&logo=tailwind-css)
+![MySQL](https://img.shields.io/badge/MySQL-8.x-4479A1?style=flat&logo=mysql)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🎯 Fitur Utama
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Untuk Warga (Citizen)
+- 📝 **Buat Laporan** - Laporkan masalah dengan foto real-time dan GPS otomatis
+- 📍 **Tracking Status** - Pantau progress laporan dari pending hingga selesai
+- 👍 **Upvote System** - Dukung laporan warga lain (>50 upvotes = URGENT)
+- 🏆 **Gamifikasi** - Dapatkan poin dan badge untuk kontribusi
+- 📊 **Leaderboard** - Lihat ranking warga peduli
 
-## Learning Laravel
+### Untuk Admin Dinas
+- ✅ **Verifikasi Laporan** - Review dan verifikasi laporan masuk
+- 🔄 **Update Status** - Ubah status laporan (Diproses, Selesai, Ditolak)
+- 📸 **Upload Bukti** - Unggah foto penyelesaian pekerjaan
+- 📈 **Dashboard Analytics** - Lihat statistik laporan per dinas
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Untuk Super Admin
+- 🏢 **Manajemen Dinas** - CRUD dinas/instansi pemerintah
+- 📁 **Manajemen Kategori** - CRUD kategori keluhan
+- 👥 **Manajemen User** - Kelola akses pengguna
+- 🗺️ **Heatmap** - Visualisasi area dengan laporan terbanyak
+- ⏱️ **SLA Monitoring** - Tracking waktu penyelesaian
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## 🏗️ Arsitektur
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Tech Stack
+- **Backend**: Laravel 11.x (PHP 8.2+)
+- **Frontend**: Vue 3 (Composition API) + Inertia.js
+- **Styling**: Tailwind CSS + Poppins Font
+- **Database**: MySQL 8.x
+- **Real-time**: Laravel Reverb (WebSocket)
+- **Authentication**: Laravel Breeze + Sanctum
+- **Permissions**: Spatie Laravel Permission
 
-## Laravel Sponsors
+### Design Pattern
+- **Domain-Driven Design (DDD)**
+- **Repository Pattern**
+- **Service Layer Pattern**
+- **SOLID Principles**
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Struktur Direktori
+```
+app/
+├── Domains/
+│   ├── Reports/
+│   │   ├── Models/
+│   │   ├── Services/
+│   │   └── Repositories/
+│   ├── Categories/
+│   ├── Departments/
+│   └── Gamification/
+├── Http/
+│   ├── Controllers/
+│   └── Middleware/
+resources/
+├── js/
+│   ├── Pages/
+│   ├── Layouts/
+│   └── Components/
+└── css/
+```
 
-### Premium Partners
+## 🚀 Instalasi
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### Requirements
+- PHP >= 8.2
+- Composer
+- Node.js >= 18.x
+- MySQL >= 8.x
+- Git
 
-## Contributing
+### Step-by-Step
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+1. **Clone Repository**
+```bash
+git clone https://github.com/AkbariAidul/go-bakula.git
+cd go-bakula
+```
 
-## Code of Conduct
+2. **Install Dependencies**
+```bash
+composer install
+npm install
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+3. **Environment Setup**
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-## Security Vulnerabilities
+4. **Database Configuration**
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Edit `.env`:
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=go-bakula
+DB_USERNAME=root
+DB_PASSWORD=
+```
 
-## License
+5. **Run Migrations & Seeders**
+```bash
+php artisan migrate:fresh --seed
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+6. **Storage Link**
+```bash
+php artisan storage:link
+```
+
+7. **Build Assets**
+```bash
+npm run build
+# atau untuk development
+npm run dev
+```
+
+8. **Run Application**
+```bash
+php artisan serve
+```
+
+Akses aplikasi di: `http://localhost:8000`
+
+## 👥 Default Users
+
+Setelah seeding, gunakan akun berikut untuk testing:
+
+| Role | Email | Password |
+|------|-------|----------|
+| Super Admin | admin@baritokualakab.go.id | password |
+| Admin Dinas PUPR | pupr@baritokualakab.go.id | password |
+| Warga | warga@example.com | password |
+
+## 📱 UI/UX Design
+
+### Design Language
+- **Style**: BWA (BuildWithAngga) - Clean, white, minimalist
+- **Typography**: Poppins (300, 400, 500, 600, 700)
+- **Color Palette**:
+  - Primary: Green (#22c55e) - Lingkungan/Keamanan
+  - Accent: Slate - Teks
+  - Background: White/Off-white (#F8FAFC)
+
+### Adaptive Layout
+- **Desktop/Tablet Landscape**: Sidebar navigation + Topbar
+- **Mobile/Tablet Portrait**: Bottom navigation + FAB
+
+## 🗂️ Database Schema
+
+### Tables
+- `users` - User accounts
+- `departments` - Dinas/Instansi (PUPR, BPBD, DLH, DISHUB)
+- `categories` - Kategori keluhan (Jalan Rusak, Banjir, Sampah, dll)
+- `reports` - Laporan warga
+- `upvotes` - Upvote laporan
+- `user_points` - Poin & badge gamifikasi
+- `roles` & `permissions` - RBAC (Spatie)
+
+## 🎮 Gamifikasi
+
+### Sistem Poin
+- ✅ Laporan selesai: **+10 poin**
+- 👍 Memberikan upvote: **+1 poin**
+
+### Badge Levels
+| Badge | Poin Required |
+|-------|---------------|
+| 🥉 Pemula | 0 |
+| 🥈 Warga Peduli | 50 |
+| 🥇 Pahlawan Lingkungan | 100 |
+| 💎 Guardian Kota | 250 |
+| 👑 Legend | 500 |
+
+## 🔐 Role & Permissions
+
+### Roles
+1. **super_admin** - Full access
+2. **admin_dinas** - Manage reports for their department
+3. **warga** - Create and view reports
+
+### Permissions
+- `view reports`
+- `create reports`
+- `update reports`
+- `delete reports`
+- `verify reports`
+- `complete reports`
+- `manage departments`
+- `manage categories`
+- `view analytics`
+- `manage users`
+
+## 📊 API Endpoints
+
+### Reports
+```
+GET    /reports              - List all reports
+POST   /reports              - Create new report
+GET    /reports/{id}         - Show report detail
+PATCH  /reports/{id}/status  - Update status (admin)
+POST   /reports/{id}/upvote  - Toggle upvote
+```
+
+### Departments (Super Admin)
+```
+GET    /departments          - List departments
+POST   /departments          - Create department
+PUT    /departments/{id}     - Update department
+DELETE /departments/{id}     - Delete department
+```
+
+### Categories (Super Admin)
+```
+GET    /categories           - List categories
+POST   /categories           - Create category
+PUT    /categories/{id}      - Update category
+DELETE /categories/{id}      - Delete category
+```
+
+## 🧪 Testing
+
+```bash
+# Run all tests
+php artisan test
+
+# Run specific test
+php artisan test --filter=ReportTest
+```
+
+## 📝 Development Workflow
+
+### Git Workflow
+```bash
+# Checkout dev branch
+git checkout dev
+
+# Create feature branch
+git checkout -b feature/nama-fitur
+
+# Commit changes
+git add .
+git commit -m "feat: deskripsi fitur"
+
+# Push to remote
+git push origin feature/nama-fitur
+
+# Create Pull Request to dev
+```
+
+### Commit Convention
+- `feat:` - New feature
+- `fix:` - Bug fix
+- `docs:` - Documentation
+- `style:` - Formatting
+- `refactor:` - Code refactoring
+- `test:` - Testing
+- `chore:` - Maintenance
+
+## 🤝 Contributing
+
+1. Fork repository
+2. Create feature branch
+3. Commit changes
+4. Push to branch
+5. Create Pull Request
+
+## 📄 License
+
+This project is proprietary software for Kabupaten Barito Kuala.
+
+## 👨‍💻 Developer
+
+Developed by **AkbariAidul**
+- GitHub: [@AkbariAidul](https://github.com/AkbariAidul)
+- Email: akbariaidul@gmail.com
+
+## 🙏 Acknowledgments
+
+- Laravel Framework
+- Vue.js Community
+- Tailwind CSS
+- Spatie Packages
+- BuildWithAngga Design System
+
+---
+
+**GO BAKULA** - Wujudkan Barito Kuala yang Lebih Baik Bersama! 🌿✨
