@@ -38,5 +38,10 @@ class DatabaseSeeder extends Seeder
             'email' => 'warga@example.com',
         ]);
         $warga->assignRole('warga');
+
+        // Seed sample reports
+        $this->call([
+            ReportSeeder::class,
+        ]);
     }
 }
