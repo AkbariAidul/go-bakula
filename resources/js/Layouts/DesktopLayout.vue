@@ -21,13 +21,42 @@
       </nav>
 
       <div class="absolute bottom-0 w-64 p-4 border-t border-slate-200">
-        <div class="flex items-center">
-          <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600 font-semibold">
-            {{ userInitial }}
-          </div>
-          <div class="ml-3 flex-1">
-            <p class="text-sm font-semibold text-slate-800">{{ $page.props.auth.user?.name }}</p>
-            <p class="text-xs text-slate-500">{{ userRole }}</p>
+        <div class="relative">
+          <button 
+            @click="showUserMenu = !showUserMenu"
+            class="flex items-center w-full hover:bg-slate-50 p-2 rounded-xl transition"
+          >
+            <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600 font-semibold">
+              {{ userInitial }}
+            </div>
+            <div class="ml-3 flex-1 text-left">
+              <p class="text-sm font-semibold text-slate-800">{{ $page.props.auth.user?.name }}</p>
+              <p class="text-xs text-slate-500">{{ userRole }}</p>
+            </div>
+            <span class="text-slate-400">{{ showUserMenu ? '▲' : '▼' }}</span>
+          </button>
+
+          <!-- Dropdown Menu -->
+          <div 
+            v-if="showUserMenu"
+            class="absolute bottom-full left-0 right-0 mb-2 bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden"
+          >
+            <Link
+              :href="route('profile.edit')"
+              class="flex items-center px-4 py-3 hover:bg-slate-50 transition text-slate-700"
+            >
+              <span class="text-lg mr-3">👤</span>
+              <span class="text-sm font-medium">Profile</span>
+            </Link>
+            <Link
+              :href="route('logout')"
+              method="post"
+              as="button"
+              class="flex items-center w-full px-4 py-3 hover:bg-red-50 transition text-red-600"
+            >
+              <span class="text-lg mr-3">🚪</span>
+              <span class="text-sm font-medium">Logout</span>
+            </Link>
           </div>
         </div>
       </div>
@@ -58,10 +87,16 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
-import { Link, usePage } from '@inertiajs/vue3';
+import { ref, computed } from 'vue';
+import { Link, usePage, router } from '@inertiajs/vue3';
 
 const page = usePage();
+const showUserMenu = ref(false);
+
+// Route helper
+const route = (name, params) => {
+  return window.route ? window.route(name, params) : `/${name}`;
+};
 
 const props = defineProps({
   pageTitle: {
