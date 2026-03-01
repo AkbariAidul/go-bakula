@@ -78,7 +78,8 @@ class ReportSeeder extends Seeder
             $reportData['department_id'] = Category::find($reportData['category_id'])->department_id;
             
             // Create dummy photo path (in real scenario, this would be actual uploaded file)
-            $reportData['photo_path'] = 'reports/sample-' . uniqid() . '.jpg';
+            // For demo purposes, we'll use a placeholder path
+            $reportData['photo_path'] = 'reports/sample-report.jpg';
             
             Report::create($reportData);
         }
