@@ -1,5 +1,5 @@
 <template>
-  <DesktopLayout page-title="Semua Laporan">
+  <component :is="layoutComponent" page-title="Semua Laporan">
     <!-- Filters -->
     <div class="bg-white rounded-2xl shadow-sm p-6 mb-6">
       <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -102,17 +102,27 @@
         :class="link.active ? 'bg-green-600 text-white' : 'bg-white text-slate-600 hover:bg-slate-50'"
       />
     </div>
-  </DesktopLayout>
+  </component>
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { Link, router } from '@inertiajs/vue3';
+import { ref, computed } from 'vue';
+import { Link, router, usePage } from '@inertiajs/vue3';
 import DesktopLayout from '@/Layouts/DesktopLayout.vue';
+import MobileAppLayout from '@/Layouts/MobileAppLayout.vue';
+
+const page = usePage();
 
 const props = defineProps({
   reports: Object,
   filters: Object,
+});
+
+// Determine layout based on user role
+const layoutComponent = computed(() => {
+  const roles = page.props.auth.user?.roles;
+  const isWarga = roles?.includes('warga') && !roles?.includes('super_admin') && !roles?.includes('admin_dinas');
+  return isWarga ? MobileAppLayout : DesktopLayout;
 });
 
 const filterForm = ref({

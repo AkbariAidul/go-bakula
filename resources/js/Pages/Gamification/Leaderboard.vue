@@ -1,5 +1,5 @@
 <template>
-  <DesktopLayout page-title="Leaderboard Warga Peduli">
+  <component :is="layoutComponent" page-title="Leaderboard Warga Peduli">
     <div class="max-w-4xl mx-auto">
       <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
         <!-- Header -->
@@ -89,14 +89,26 @@
         </div>
       </div>
     </div>
-  </DesktopLayout>
+  </component>
 </template>
 
 <script setup>
+import { computed } from 'vue';
+import { usePage } from '@inertiajs/vue3';
 import DesktopLayout from '@/Layouts/DesktopLayout.vue';
+import MobileAppLayout from '@/Layouts/MobileAppLayout.vue';
+
+const page = usePage();
 
 const props = defineProps({
   leaderboard: Array,
+});
+
+// Determine layout based on user role
+const layoutComponent = computed(() => {
+  const roles = page.props.auth.user?.roles;
+  const isWarga = roles?.includes('warga') && !roles?.includes('super_admin') && !roles?.includes('admin_dinas');
+  return isWarga ? MobileAppLayout : DesktopLayout;
 });
 
 const getMedal = (index) => {

@@ -1,5 +1,5 @@
 <template>
-  <DesktopLayout page-title="Buat Laporan Baru">
+  <component :is="layoutComponent" page-title="Buat Laporan Baru">
     <div class="max-w-3xl mx-auto">
       <div class="bg-white rounded-2xl shadow-sm p-8">
         <form @submit.prevent="submit">
@@ -124,16 +124,26 @@
         </form>
       </div>
     </div>
-  </DesktopLayout>
+  </component>
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { Link, useForm } from '@inertiajs/vue3';
+import { ref, computed } from 'vue';
+import { Link, useForm, usePage } from '@inertiajs/vue3';
 import DesktopLayout from '@/Layouts/DesktopLayout.vue';
+import MobileAppLayout from '@/Layouts/MobileAppLayout.vue';
+
+const page = usePage();
 
 const props = defineProps({
   categories: Array,
+});
+
+// Determine layout based on user role
+const layoutComponent = computed(() => {
+  const roles = page.props.auth.user?.roles;
+  const isWarga = roles?.includes('warga') && !roles?.includes('super_admin') && !roles?.includes('admin_dinas');
+  return isWarga ? MobileAppLayout : DesktopLayout;
 });
 
 const form = useForm({

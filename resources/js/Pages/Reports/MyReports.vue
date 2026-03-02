@@ -1,5 +1,5 @@
 <template>
-  <DesktopLayout page-title="Laporan Saya">
+  <component :is="layoutComponent" page-title="Laporan Saya">
     <div class="mb-6">
       <Link 
         href="/reports/create"
@@ -81,15 +81,26 @@
         :class="link.active ? 'bg-green-600 text-white' : 'bg-white text-slate-600 hover:bg-slate-50'"
       />
     </div>
-  </DesktopLayout>
+  </component>
 </template>
 
 <script setup>
-import { Link } from '@inertiajs/vue3';
+import { computed } from 'vue';
+import { Link, usePage } from '@inertiajs/vue3';
 import DesktopLayout from '@/Layouts/DesktopLayout.vue';
+import MobileAppLayout from '@/Layouts/MobileAppLayout.vue';
+
+const page = usePage();
 
 const props = defineProps({
   reports: Object,
+});
+
+// Determine layout based on user role
+const layoutComponent = computed(() => {
+  const roles = page.props.auth.user?.roles;
+  const isWarga = roles?.includes('warga') && !roles?.includes('super_admin') && !roles?.includes('admin_dinas');
+  return isWarga ? MobileAppLayout : DesktopLayout;
 });
 
 const getStatusClass = (status) => {

@@ -1,5 +1,5 @@
 <template>
-  <DesktopLayout page-title="Dashboard">
+  <component :is="layoutComponent" page-title="Dashboard">
     <!-- Stats Cards -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
       <div class="bg-white rounded-2xl shadow-sm p-6">
@@ -88,16 +88,28 @@
         </div>
       </div>
     </div>
-  </DesktopLayout>
+  </component>
 </template>
 
 <script setup>
+import { computed } from 'vue';
+import { usePage } from '@inertiajs/vue3';
 import DesktopLayout from '@/Layouts/DesktopLayout.vue';
+import MobileAppLayout from '@/Layouts/MobileAppLayout.vue';
+
+const page = usePage();
 
 const props = defineProps({
   stats: Object,
   recentReports: Array,
   heatmapData: Array,
+});
+
+// Determine layout based on user role
+const layoutComponent = computed(() => {
+  const roles = page.props.auth.user?.roles;
+  const isWarga = roles?.includes('warga') && !roles?.includes('super_admin') && !roles?.includes('admin_dinas');
+  return isWarga ? MobileAppLayout : DesktopLayout;
 });
 
 const getCategoryIcon = (category) => {

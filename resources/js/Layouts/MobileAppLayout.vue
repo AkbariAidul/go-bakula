@@ -8,10 +8,48 @@
           <p class="text-xs text-slate-500">Barito Kuala</p>
         </div>
         
-        <button class="p-2 rounded-xl hover:bg-slate-50 relative">
-          <span class="text-2xl">🔔</span>
-          <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-        </button>
+        <div class="flex items-center gap-2">
+          <button class="p-2 rounded-xl hover:bg-slate-50 relative">
+            <span class="text-2xl">🔔</span>
+            <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+          </button>
+          
+          <!-- User Menu Button -->
+          <button 
+            @click="showUserMenu = !showUserMenu"
+            class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600 font-semibold"
+          >
+            {{ userInitial }}
+          </button>
+        </div>
+      </div>
+
+      <!-- User Dropdown Menu -->
+      <div 
+        v-if="showUserMenu"
+        class="absolute top-16 right-4 bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden z-20 min-w-[200px]"
+      >
+        <div class="px-4 py-3 border-b border-slate-200">
+          <p class="text-sm font-semibold text-slate-800">{{ $page.props.auth.user?.name }}</p>
+          <p class="text-xs text-slate-500">{{ userRole }}</p>
+        </div>
+        <Link
+          :href="route('profile.edit')"
+          class="flex items-center px-4 py-3 hover:bg-slate-50 transition text-slate-700"
+          @click="showUserMenu = false"
+        >
+          <span class="text-lg mr-3">👤</span>
+          <span class="text-sm font-medium">Profile</span>
+        </Link>
+        <Link
+          :href="route('logout')"
+          method="post"
+          as="button"
+          class="flex items-center w-full px-4 py-3 hover:bg-red-50 transition text-red-600"
+        >
+          <span class="text-lg mr-3">🚪</span>
+          <span class="text-sm font-medium">Logout</span>
+        </Link>
       </div>
     </header>
 
@@ -48,16 +86,33 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { ref, computed } from 'vue';
 import { Link, usePage } from '@inertiajs/vue3';
 
 const page = usePage();
+const showUserMenu = ref(false);
+
+// Route helper
+const route = (name, params) => {
+  return window.route ? window.route(name, params) : `/${name}`;
+};
 
 const props = defineProps({
   showFAB: {
     type: Boolean,
     default: true
   }
+});
+
+const userInitial = computed(() => {
+  return page.props.auth.user?.name?.charAt(0).toUpperCase() || 'U';
+});
+
+const userRole = computed(() => {
+  const roles = page.props.auth.user?.roles;
+  if (roles?.includes('super_admin')) return 'Super Admin';
+  if (roles?.includes('admin_dinas')) return 'Admin Dinas';
+  return 'Warga';
 });
 
 const navigation = computed(() => {

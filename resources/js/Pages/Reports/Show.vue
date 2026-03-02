@@ -1,5 +1,5 @@
 <template>
-  <DesktopLayout :page-title="`Laporan #${report.id}`">
+  <component :is="layoutComponent" :page-title="`Laporan #${report.id}`">
     <div class="max-w-4xl mx-auto">
       <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
         <!-- Header -->
@@ -169,13 +169,14 @@
         </div>
       </div>
     </div>
-  </DesktopLayout>
+  </component>
 </template>
 
 <script setup>
 import { ref, computed } from 'vue';
 import { useForm, usePage } from '@inertiajs/vue3';
 import DesktopLayout from '@/Layouts/DesktopLayout.vue';
+import MobileAppLayout from '@/Layouts/MobileAppLayout.vue';
 import axios from 'axios';
 
 const props = defineProps({
@@ -183,6 +184,14 @@ const props = defineProps({
 });
 
 const page = usePage();
+
+// Determine layout based on user role
+const layoutComponent = computed(() => {
+  const roles = page.props.auth.user?.roles;
+  const isWarga = roles?.includes('warga') && !roles?.includes('super_admin') && !roles?.includes('admin_dinas');
+  return isWarga ? MobileAppLayout : DesktopLayout;
+});
+
 const user = computed(() => page.props.auth.user);
 const canManage = computed(() => {
   return user.value?.roles?.includes('super_admin') || user.value?.roles?.includes('admin_dinas');
