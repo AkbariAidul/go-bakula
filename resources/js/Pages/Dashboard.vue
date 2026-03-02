@@ -1,90 +1,109 @@
 <template>
   <component :is="layoutComponent" page-title="Dashboard">
     <!-- Stats Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
-      <div class="bg-white rounded-2xl shadow-sm p-6">
+    <div class="grid grid-cols-2 gap-3 mb-6">
+      <!-- Total -->
+      <div class="bg-white rounded-2xl shadow-sm p-4">
         <div class="flex items-center justify-between mb-2">
-          <span class="text-3xl">📊</span>
-          <span class="text-xs font-semibold text-slate-500 uppercase">Total</span>
+          <span class="text-2xl">📊</span>
         </div>
-        <p class="text-3xl font-bold text-slate-800">{{ stats.total_reports }}</p>
-        <p class="text-sm text-slate-500 mt-1">Total Laporan</p>
+        <p class="text-2xl font-bold text-slate-800">{{ stats.total_reports }}</p>
+        <p class="text-xs text-slate-500 mt-1">Total Laporan</p>
       </div>
 
-      <div class="bg-white rounded-2xl shadow-sm p-6">
+      <!-- Pending -->
+      <div class="bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-2xl shadow-sm p-4">
         <div class="flex items-center justify-between mb-2">
-          <span class="text-3xl">⏳</span>
-          <span class="text-xs font-semibold text-yellow-500 uppercase">Pending</span>
+          <span class="text-2xl">⏳</span>
         </div>
-        <p class="text-3xl font-bold text-yellow-600">{{ stats.pending_reports }}</p>
-        <p class="text-sm text-slate-500 mt-1">Menunggu Verifikasi</p>
+        <p class="text-2xl font-bold text-yellow-700">{{ stats.pending_reports }}</p>
+        <p class="text-xs text-yellow-600 mt-1">Menunggu</p>
       </div>
 
-      <div class="bg-white rounded-2xl shadow-sm p-6">
+      <!-- Progress -->
+      <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl shadow-sm p-4">
         <div class="flex items-center justify-between mb-2">
-          <span class="text-3xl">🔄</span>
-          <span class="text-xs font-semibold text-blue-500 uppercase">Progress</span>
+          <span class="text-2xl">🔄</span>
         </div>
-        <p class="text-3xl font-bold text-blue-600">{{ stats.in_progress_reports }}</p>
-        <p class="text-sm text-slate-500 mt-1">Sedang Diproses</p>
+        <p class="text-2xl font-bold text-blue-700">{{ stats.in_progress_reports }}</p>
+        <p class="text-xs text-blue-600 mt-1">Diproses</p>
       </div>
 
-      <div class="bg-white rounded-2xl shadow-sm p-6">
+      <!-- Done -->
+      <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-2xl shadow-sm p-4">
         <div class="flex items-center justify-between mb-2">
-          <span class="text-3xl">✅</span>
-          <span class="text-xs font-semibold text-green-500 uppercase">Done</span>
+          <span class="text-2xl">✅</span>
         </div>
-        <p class="text-3xl font-bold text-green-600">{{ stats.completed_reports }}</p>
-        <p class="text-sm text-slate-500 mt-1">Selesai</p>
+        <p class="text-2xl font-bold text-green-700">{{ stats.completed_reports }}</p>
+        <p class="text-xs text-green-600 mt-1">Selesai</p>
       </div>
+    </div>
 
-      <div class="bg-white rounded-2xl shadow-sm p-6">
-        <div class="flex items-center justify-between mb-2">
-          <span class="text-3xl">🚨</span>
-          <span class="text-xs font-semibold text-red-500 uppercase">Urgent</span>
+    <!-- Urgent Banner (if any) -->
+    <div v-if="stats.urgent_reports > 0" class="bg-gradient-to-r from-red-500 to-red-600 rounded-2xl shadow-sm p-4 mb-6 text-white">
+      <div class="flex items-center gap-3">
+        <span class="text-3xl">🚨</span>
+        <div>
+          <p class="text-2xl font-bold">{{ stats.urgent_reports }}</p>
+          <p class="text-sm opacity-90">Laporan Mendesak</p>
         </div>
-        <p class="text-3xl font-bold text-red-600">{{ stats.urgent_reports }}</p>
-        <p class="text-sm text-slate-500 mt-1">Mendesak</p>
       </div>
     </div>
 
     <!-- Recent Reports -->
-    <div class="bg-white rounded-2xl shadow-sm p-6">
-      <h3 class="text-xl font-semibold text-slate-800 mb-4">Laporan Terbaru</h3>
+    <div class="bg-white rounded-2xl shadow-sm p-4">
+      <h3 class="text-lg font-semibold text-slate-800 mb-4">Laporan Terbaru</h3>
       
-      <div class="space-y-4">
+      <div class="space-y-3">
         <div 
           v-for="report in recentReports" 
           :key="report.id"
-          class="flex items-start p-4 border border-slate-200 rounded-xl hover:bg-slate-50 transition cursor-pointer"
+          class="flex items-start gap-3 p-3 border border-slate-100 rounded-xl hover:bg-slate-50 transition cursor-pointer active:scale-98"
           @click="$inertia.visit(`/reports/${report.id}`)"
         >
-          <div class="flex-1">
-            <div class="flex items-center gap-2 mb-2">
-              <span class="text-2xl">{{ getCategoryIcon(report.category) }}</span>
-              <h4 class="font-semibold text-slate-800">{{ report.title }}</h4>
+          <div class="flex-shrink-0">
+            <div class="w-12 h-12 rounded-xl bg-green-50 flex items-center justify-center text-2xl">
+              {{ getCategoryIcon(report.category) }}
+            </div>
+          </div>
+          
+          <div class="flex-1 min-w-0">
+            <div class="flex items-start justify-between gap-2 mb-1">
+              <h4 class="font-semibold text-slate-800 text-sm line-clamp-1">{{ report.title }}</h4>
               <span 
                 v-if="report.is_urgent"
-                class="px-2 py-1 bg-red-100 text-red-600 text-xs font-semibold rounded-lg"
+                class="flex-shrink-0 px-2 py-0.5 bg-red-100 text-red-600 text-xs font-semibold rounded-lg"
               >
                 URGENT
               </span>
             </div>
-            <p class="text-sm text-slate-600 mb-2">{{ report.description.substring(0, 100) }}...</p>
-            <div class="flex items-center gap-4 text-xs text-slate-500">
-              <span>👤 {{ report.user.name }}</span>
-              <span>🏢 {{ report.department.name }}</span>
-              <span>📅 {{ formatDate(report.created_at) }}</span>
+            <p class="text-xs text-slate-600 mb-2 line-clamp-2">{{ report.description }}</p>
+            <div class="flex items-center gap-3 text-xs text-slate-500">
+              <span class="flex items-center gap-1">
+                <span>👤</span>
+                <span class="truncate">{{ report.user.name }}</span>
+              </span>
+              <span class="flex items-center gap-1">
+                <span>📅</span>
+                <span>{{ formatDate(report.created_at) }}</span>
+              </span>
             </div>
           </div>
-          <div>
+          
+          <div class="flex-shrink-0">
             <span 
-              class="px-3 py-1 rounded-lg text-xs font-semibold"
+              class="inline-block px-2 py-1 rounded-lg text-xs font-semibold"
               :class="getStatusClass(report.status)"
             >
               {{ getStatusLabel(report.status) }}
             </span>
           </div>
+        </div>
+
+        <!-- Empty State -->
+        <div v-if="recentReports.length === 0" class="text-center py-8">
+          <div class="text-5xl mb-3">📝</div>
+          <p class="text-slate-600 text-sm">Belum ada laporan</p>
         </div>
       </div>
     </div>

@@ -78,7 +78,7 @@
 
       <!-- FAB (Floating Action Button) for Create Report -->
       <Link
-        v-if="showFAB"
+        v-if="props.showFAB"
         href="/reports/create"
         class="fixed bottom-20 right-4 w-16 h-16 bg-green-600 text-white rounded-full shadow-lg flex items-center justify-center hover:bg-green-700 transition z-20"
         style="transform: translateX(calc(-50vw + 50% + 224px));"
