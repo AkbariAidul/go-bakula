@@ -1,109 +1,128 @@
 <template>
   <component :is="layoutComponent" page-title="Dashboard">
-    <!-- Stats Cards -->
+    <!-- Stats Cards - BWA Style -->
     <div class="grid grid-cols-2 gap-3 mb-6">
       <!-- Total -->
-      <div class="bg-white rounded-2xl shadow-sm p-4">
-        <div class="flex items-center justify-between mb-2">
-          <span class="text-2xl">📊</span>
+      <div class="bg-white rounded-2xl p-4 border border-slate-100">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center">
+            <span class="text-2xl">📊</span>
+          </div>
+          <div>
+            <p class="text-2xl font-bold text-slate-800">{{ stats.total_reports }}</p>
+            <p class="text-xs text-slate-500">Total</p>
+          </div>
         </div>
-        <p class="text-2xl font-bold text-slate-800">{{ stats.total_reports }}</p>
-        <p class="text-xs text-slate-500 mt-1">Total Laporan</p>
       </div>
 
       <!-- Pending -->
-      <div class="bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-2xl shadow-sm p-4">
-        <div class="flex items-center justify-between mb-2">
-          <span class="text-2xl">⏳</span>
+      <div class="bg-white rounded-2xl p-4 border border-yellow-200">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-xl bg-yellow-100 flex items-center justify-center">
+            <span class="text-2xl">⏳</span>
+          </div>
+          <div>
+            <p class="text-2xl font-bold text-yellow-600">{{ stats.pending_reports }}</p>
+            <p class="text-xs text-yellow-600">Menunggu</p>
+          </div>
         </div>
-        <p class="text-2xl font-bold text-yellow-700">{{ stats.pending_reports }}</p>
-        <p class="text-xs text-yellow-600 mt-1">Menunggu</p>
       </div>
 
       <!-- Progress -->
-      <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl shadow-sm p-4">
-        <div class="flex items-center justify-between mb-2">
-          <span class="text-2xl">🔄</span>
+      <div class="bg-white rounded-2xl p-4 border border-blue-200">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center">
+            <span class="text-2xl">🔄</span>
+          </div>
+          <div>
+            <p class="text-2xl font-bold text-blue-600">{{ stats.in_progress_reports }}</p>
+            <p class="text-xs text-blue-600">Diproses</p>
+          </div>
         </div>
-        <p class="text-2xl font-bold text-blue-700">{{ stats.in_progress_reports }}</p>
-        <p class="text-xs text-blue-600 mt-1">Diproses</p>
       </div>
 
       <!-- Done -->
-      <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-2xl shadow-sm p-4">
-        <div class="flex items-center justify-between mb-2">
-          <span class="text-2xl">✅</span>
+      <div class="bg-white rounded-2xl p-4 border border-green-200">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-xl bg-green-100 flex items-center justify-center">
+            <span class="text-2xl">✅</span>
+          </div>
+          <div>
+            <p class="text-2xl font-bold text-green-600">{{ stats.completed_reports }}</p>
+            <p class="text-xs text-green-600">Selesai</p>
+          </div>
         </div>
-        <p class="text-2xl font-bold text-green-700">{{ stats.completed_reports }}</p>
-        <p class="text-xs text-green-600 mt-1">Selesai</p>
       </div>
     </div>
 
-    <!-- Urgent Banner (if any) -->
-    <div v-if="stats.urgent_reports > 0" class="bg-gradient-to-r from-red-500 to-red-600 rounded-2xl shadow-sm p-4 mb-6 text-white">
+    <!-- Urgent Alert (if any) -->
+    <div v-if="stats.urgent_reports > 0" class="bg-white rounded-2xl p-4 mb-6 border-2 border-red-200">
       <div class="flex items-center gap-3">
-        <span class="text-3xl">🚨</span>
-        <div>
-          <p class="text-2xl font-bold">{{ stats.urgent_reports }}</p>
-          <p class="text-sm opacity-90">Laporan Mendesak</p>
+        <div class="w-12 h-12 rounded-xl bg-red-100 flex items-center justify-center flex-shrink-0">
+          <span class="text-2xl">🚨</span>
+        </div>
+        <div class="flex-1">
+          <p class="text-lg font-bold text-red-600">{{ stats.urgent_reports }} Laporan Mendesak</p>
+          <p class="text-xs text-red-500">Perlu perhatian segera</p>
         </div>
       </div>
     </div>
 
     <!-- Recent Reports -->
-    <div class="bg-white rounded-2xl shadow-sm p-4">
-      <h3 class="text-lg font-semibold text-slate-800 mb-4">Laporan Terbaru</h3>
+    <div class="bg-white rounded-2xl p-4 border border-slate-100">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-base font-bold text-slate-800">Laporan Terbaru</h3>
+        <Link href="/reports" class="text-xs text-green-600 font-semibold">
+          Lihat Semua →
+        </Link>
+      </div>
       
       <div class="space-y-3">
         <div 
-          v-for="report in recentReports" 
+          v-for="report in recentReports.slice(0, 5)" 
           :key="report.id"
-          class="flex items-start gap-3 p-3 border border-slate-100 rounded-xl hover:bg-slate-50 transition cursor-pointer active:scale-98"
+          class="flex items-start gap-3 p-3 bg-slate-50 rounded-xl hover:bg-slate-100 transition cursor-pointer"
           @click="$inertia.visit(`/reports/${report.id}`)"
         >
+          <!-- Icon -->
           <div class="flex-shrink-0">
-            <div class="w-12 h-12 rounded-xl bg-green-50 flex items-center justify-center text-2xl">
-              {{ getCategoryIcon(report.category) }}
+            <div class="w-10 h-10 rounded-lg bg-white flex items-center justify-center border border-slate-200">
+              <span class="text-xl">{{ getCategoryIcon(report.category) }}</span>
             </div>
           </div>
           
+          <!-- Content -->
           <div class="flex-1 min-w-0">
             <div class="flex items-start justify-between gap-2 mb-1">
               <h4 class="font-semibold text-slate-800 text-sm line-clamp-1">{{ report.title }}</h4>
               <span 
                 v-if="report.is_urgent"
-                class="flex-shrink-0 px-2 py-0.5 bg-red-100 text-red-600 text-xs font-semibold rounded-lg"
+                class="flex-shrink-0 px-2 py-0.5 bg-red-500 text-white text-xs font-bold rounded"
               >
                 URGENT
               </span>
             </div>
-            <p class="text-xs text-slate-600 mb-2 line-clamp-2">{{ report.description }}</p>
-            <div class="flex items-center gap-3 text-xs text-slate-500">
-              <span class="flex items-center gap-1">
-                <span>👤</span>
-                <span class="truncate">{{ report.user.name }}</span>
+            <p class="text-xs text-slate-500 mb-2 line-clamp-1">{{ report.description }}</p>
+            <div class="flex items-center gap-2">
+              <span 
+                class="inline-block px-2 py-0.5 rounded text-xs font-semibold"
+                :class="getStatusClass(report.status)"
+              >
+                {{ getStatusLabel(report.status) }}
               </span>
-              <span class="flex items-center gap-1">
-                <span>📅</span>
-                <span>{{ formatDate(report.created_at) }}</span>
-              </span>
+              <span class="text-xs text-slate-400">•</span>
+              <span class="text-xs text-slate-500">{{ formatDate(report.created_at) }}</span>
             </div>
-          </div>
-          
-          <div class="flex-shrink-0">
-            <span 
-              class="inline-block px-2 py-1 rounded-lg text-xs font-semibold"
-              :class="getStatusClass(report.status)"
-            >
-              {{ getStatusLabel(report.status) }}
-            </span>
           </div>
         </div>
 
         <!-- Empty State -->
-        <div v-if="recentReports.length === 0" class="text-center py-8">
-          <div class="text-5xl mb-3">📝</div>
-          <p class="text-slate-600 text-sm">Belum ada laporan</p>
+        <div v-if="recentReports.length === 0" class="text-center py-12">
+          <div class="w-20 h-20 rounded-full bg-slate-100 flex items-center justify-center mx-auto mb-3">
+            <span class="text-4xl">📝</span>
+          </div>
+          <p class="text-slate-600 text-sm font-medium mb-1">Belum Ada Laporan</p>
+          <p class="text-slate-400 text-xs">Laporan akan muncul di sini</p>
         </div>
       </div>
     </div>
@@ -112,7 +131,7 @@
 
 <script setup>
 import { computed } from 'vue';
-import { usePage } from '@inertiajs/vue3';
+import { usePage, Link } from '@inertiajs/vue3';
 import DesktopLayout from '@/Layouts/DesktopLayout.vue';
 import MobileAppLayout from '@/Layouts/MobileAppLayout.vue';
 
