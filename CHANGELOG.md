@@ -168,6 +168,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Dynamic layout system based on user role
+- MobileAppLayout (WebApp style) for Warga (citizens)
+- DesktopLayout (Admin dashboard style) for Admin & Super Admin
+- User dropdown menu in both layouts (Profile & Logout)
+- Floating Action Button (FAB) in MobileAppLayout for quick report creation
+- Bottom navigation in MobileAppLayout
+- LAYOUT_GUIDE.md documentation
+
+### Changed
+- All main pages now use dynamic layout selection
+- Dashboard, Reports, Leaderboard adapt to user role
+- Warga users get mobile-optimized experience
+- Admin users get desktop-optimized experience
+
+---
+
+## [1.0.0] - 2026-03-01
+
 ### Planned Features
 - Real-time notifications
 - Email notifications on status changes
