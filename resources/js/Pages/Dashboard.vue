@@ -16,40 +16,40 @@
       </div>
 
       <!-- Pending -->
-      <div class="bg-white rounded-2xl p-4 border border-yellow-200">
+      <div class="bg-white rounded-2xl p-4 border border-amber-200">
         <div class="flex items-center gap-3">
-          <div class="w-12 h-12 rounded-xl bg-yellow-100 flex items-center justify-center">
+          <div class="w-12 h-12 rounded-xl bg-amber-100 flex items-center justify-center">
             <span class="text-2xl">⏳</span>
           </div>
           <div>
-            <p class="text-2xl font-bold text-yellow-600">{{ stats.pending_reports }}</p>
-            <p class="text-xs text-yellow-600">Menunggu</p>
+            <p class="text-2xl font-bold text-amber-600">{{ stats.pending_reports }}</p>
+            <p class="text-xs text-amber-600">Menunggu</p>
           </div>
         </div>
       </div>
 
       <!-- Progress -->
-      <div class="bg-white rounded-2xl p-4 border border-blue-200">
+      <div class="bg-white rounded-2xl p-4 border border-primary-200">
         <div class="flex items-center gap-3">
-          <div class="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center">
+          <div class="w-12 h-12 rounded-xl bg-primary-100 flex items-center justify-center">
             <span class="text-2xl">🔄</span>
           </div>
           <div>
-            <p class="text-2xl font-bold text-blue-600">{{ stats.in_progress_reports }}</p>
-            <p class="text-xs text-blue-600">Diproses</p>
+            <p class="text-2xl font-bold text-primary-700">{{ stats.in_progress_reports }}</p>
+            <p class="text-xs text-primary-700">Diproses</p>
           </div>
         </div>
       </div>
 
       <!-- Done -->
-      <div class="bg-white rounded-2xl p-4 border border-green-200">
+      <div class="bg-white rounded-2xl p-4 border border-emerald-200">
         <div class="flex items-center gap-3">
-          <div class="w-12 h-12 rounded-xl bg-green-100 flex items-center justify-center">
+          <div class="w-12 h-12 rounded-xl bg-emerald-100 flex items-center justify-center">
             <span class="text-2xl">✅</span>
           </div>
           <div>
-            <p class="text-2xl font-bold text-green-600">{{ stats.completed_reports }}</p>
-            <p class="text-xs text-green-600">Selesai</p>
+            <p class="text-2xl font-bold text-emerald-600">{{ stats.completed_reports }}</p>
+            <p class="text-xs text-emerald-600">Selesai</p>
           </div>
         </div>
       </div>
@@ -72,7 +72,7 @@
     <div class="bg-white rounded-2xl p-4 border border-slate-100">
       <div class="flex items-center justify-between mb-4">
         <h3 class="text-base font-bold text-slate-800">Laporan Terbaru</h3>
-        <Link href="/reports" class="text-xs text-green-600 font-semibold">
+        <Link href="/reports" class="text-xs text-primary-700 font-semibold">
           Lihat Semua →
         </Link>
       </div>

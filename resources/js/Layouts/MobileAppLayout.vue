@@ -18,7 +18,7 @@
             <!-- User Menu Button -->
             <button 
               @click="showUserMenu = !showUserMenu"
-              class="w-9 h-9 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white font-bold text-sm shadow-sm"
+              class="w-9 h-9 rounded-full bg-gradient-to-br from-primary-800 to-primary-900 flex items-center justify-center text-white font-bold text-sm shadow-sm"
             >
               {{ userInitial }}
             </button>
@@ -30,7 +30,7 @@
           v-if="showUserMenu"
           class="absolute top-14 right-4 bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden z-20 min-w-[200px]"
         >
-          <div class="px-4 py-3 bg-gradient-to-br from-blue-50 to-blue-100 border-b border-blue-200">
+          <div class="px-4 py-3 bg-gradient-to-br from-primary-50 to-primary-100 border-b border-primary-200">
             <p class="text-sm font-bold text-slate-800">{{ $page.props.auth.user?.name }}</p>
             <p class="text-xs text-slate-600">{{ userRole }}</p>
           </div>
@@ -68,7 +68,7 @@
             :href="item.href"
             class="flex flex-col items-center py-2 px-3 rounded-xl transition-all"
             :class="isActive(item.href) 
-              ? 'text-blue-600 bg-blue-50' 
+              ? 'text-primary-900 bg-primary-50' 
               : 'text-slate-400 hover:text-slate-600 hover:bg-slate-50'"
           >
             <span class="text-2xl mb-0.5">{{ item.icon }}</span>
@@ -81,7 +81,7 @@
       <Link
         v-if="props.showFAB"
         href="/reports/create"
-        class="fixed bottom-20 right-4 w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-full shadow-lg flex items-center justify-center hover:shadow-xl transition-all z-20 hover:scale-105"
+        class="fixed bottom-20 right-4 w-14 h-14 bg-gradient-to-br from-primary-800 to-primary-900 text-white rounded-full shadow-lg flex items-center justify-center hover:shadow-xl transition-all z-20 hover:scale-105"
         style="transform: translateX(calc(-50vw + 50% + 224px));"
       >
         <span class="text-2xl font-bold">+</span>
