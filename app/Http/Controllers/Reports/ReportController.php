@@ -100,8 +100,8 @@ class ReportController extends Controller
     {
         $request->validate([
             'completion_photo' => 'required|image|max:5120',
-        ]);
-
+            
+        ]); 
         $this->service->uploadCompletionPhoto($report, $request->file('completion_photo'));
         $this->service->updateStatus($report, 'completed', null, $request->user()->id);
 

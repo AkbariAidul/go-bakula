@@ -1,25 +1,24 @@
 <template>
-  <div class="min-h-screen bg-slate-900 flex items-start justify-center">
+  <div class="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex items-start justify-center">
     <!-- Mobile Container -->
-    <div class="w-full max-w-md min-h-screen bg-slate-50 pb-20 relative shadow-2xl">
+    <div class="w-full max-w-md min-h-screen bg-white pb-20 relative shadow-2xl">
       <!-- Header -->
-      <header class="bg-white shadow-sm sticky top-0 z-10">
-        <div class="px-4 py-4 flex items-center justify-between">
-          <div>
-            <h1 class="text-xl font-bold text-green-600">GO BAKULA</h1>
-            <p class="text-xs text-slate-500">Barito Kuala</p>
+      <header class="bg-white border-b border-slate-100 sticky top-0 z-10">
+        <div class="px-4 py-3 flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <img src="/images/logo.png" alt="GO BAKULA" class="h-8" />
           </div>
           
           <div class="flex items-center gap-2">
-            <button class="p-2 rounded-xl hover:bg-slate-50 relative">
-              <span class="text-2xl">🔔</span>
-              <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+            <button class="p-2 rounded-xl hover:bg-slate-50 relative transition">
+              <span class="text-xl">🔔</span>
+              <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full"></span>
             </button>
             
             <!-- User Menu Button -->
             <button 
               @click="showUserMenu = !showUserMenu"
-              class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600 font-semibold"
+              class="w-9 h-9 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white font-bold text-sm shadow-sm"
             >
               {{ userInitial }}
             </button>
@@ -29,11 +28,11 @@
         <!-- User Dropdown Menu -->
         <div 
           v-if="showUserMenu"
-          class="absolute top-16 right-4 bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden z-20 min-w-[200px]"
+          class="absolute top-14 right-4 bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden z-20 min-w-[200px]"
         >
-          <div class="px-4 py-3 border-b border-slate-200">
-            <p class="text-sm font-semibold text-slate-800">{{ $page.props.auth.user?.name }}</p>
-            <p class="text-xs text-slate-500">{{ userRole }}</p>
+          <div class="px-4 py-3 bg-gradient-to-br from-blue-50 to-blue-100 border-b border-blue-200">
+            <p class="text-sm font-bold text-slate-800">{{ $page.props.auth.user?.name }}</p>
+            <p class="text-xs text-slate-600">{{ userRole }}</p>
           </div>
           <Link
             :href="route('profile.edit')"
@@ -47,7 +46,7 @@
             :href="route('logout')"
             method="post"
             as="button"
-            class="flex items-center w-full px-4 py-3 hover:bg-red-50 transition text-red-600"
+            class="flex items-center w-full px-4 py-3 hover:bg-red-50 transition text-red-600 border-t border-slate-100"
           >
             <span class="text-lg mr-3">🚪</span>
             <span class="text-sm font-medium">Logout</span>
@@ -56,22 +55,24 @@
       </header>
 
       <!-- Page Content -->
-      <main class="p-4">
+      <main class="p-4 bg-slate-50 min-h-screen">
         <slot />
       </main>
 
       <!-- Bottom Navigation -->
       <nav class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md bg-white border-t border-slate-200 shadow-lg">
-        <div class="flex items-center justify-around py-2">
+        <div class="flex items-center justify-around px-2 py-2">
           <Link
             v-for="item in navigation"
             :key="item.name"
             :href="item.href"
-            class="flex flex-col items-center py-2 px-4 rounded-xl transition"
-            :class="isActive(item.href) ? 'text-green-600' : 'text-slate-400'"
+            class="flex flex-col items-center py-2 px-3 rounded-xl transition-all"
+            :class="isActive(item.href) 
+              ? 'text-blue-600 bg-blue-50' 
+              : 'text-slate-400 hover:text-slate-600 hover:bg-slate-50'"
           >
-            <span class="text-2xl mb-1">{{ item.icon }}</span>
-            <span class="text-xs font-medium">{{ item.name }}</span>
+            <span class="text-2xl mb-0.5">{{ item.icon }}</span>
+            <span class="text-xs font-semibold">{{ item.name }}</span>
           </Link>
         </div>
       </nav>
@@ -80,10 +81,10 @@
       <Link
         v-if="props.showFAB"
         href="/reports/create"
-        class="fixed bottom-20 right-4 w-16 h-16 bg-green-600 text-white rounded-full shadow-lg flex items-center justify-center hover:bg-green-700 transition z-20"
+        class="fixed bottom-20 right-4 w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-full shadow-lg flex items-center justify-center hover:shadow-xl transition-all z-20 hover:scale-105"
         style="transform: translateX(calc(-50vw + 50% + 224px));"
       >
-        <span class="text-3xl">+</span>
+        <span class="text-2xl font-bold">+</span>
       </Link>
     </div>
   </div>
